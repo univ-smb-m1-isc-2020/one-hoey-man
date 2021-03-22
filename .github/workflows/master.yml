@@ -32,5 +32,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: univ-smb-m1-isc-2020/one-hoey-man/
+          repository: univ-smb-m1-isc-2020/one-hoey-man/one-hoey-man
           tag_with_ref: true
