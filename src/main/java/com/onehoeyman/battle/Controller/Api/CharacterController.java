@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/characters")
@@ -18,15 +17,37 @@ public class CharacterController {
     ICharacterService characterService;
     @Autowired
     IUserService userService;
+
+    /**
+     * All characters
+     * @return Character[]
+     */
     @GetMapping(path = "")
     public List<Character> findCharacters() {
         List<Character> characters = (List<Character>) characterService.findAll();
         return characters;
     }
 
+    /**
+     * Get all characters of a user
+     * @param creator_id : Creator's id
+     * @return Character[]
+     */
+    @GetMapping(path = "{creator_id}")
+    public List<Character> findCharactersByCreatorId(@PathVariable int creator_id) {
+        List<Character> characters = (List<Character>) characterService.findByCreatorId(creator_id);
+        return characters;
+    }
+
+    /**
+     * Create a character for the user passed by id
+     * @param character : Character object
+     * @param creator_id : The creator's id
+     * @return Character
+     */
     @PostMapping(path = "create", produces = "application/json")
-    public Character create(@RequestBody @Validated Character character, @RequestParam("creator_id") int id) {
-        character.setCreator(userService.findById(id));
+    public Character create(@RequestBody @Validated Character character, @RequestParam("creator_id") int creator_id) {
+        character.setCreator(userService.findById(creator_id));
         return characterService.save(character);
     }
 

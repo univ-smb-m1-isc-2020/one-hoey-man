@@ -12,4 +12,6 @@ public interface ICharacterService {
     public Optional<Character> findById(Long id);
 
     public Character save(Character character);
+
+    List<Character> findByCreatorId(int creator_id);
 }

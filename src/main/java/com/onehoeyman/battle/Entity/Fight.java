@@ -8,12 +8,15 @@ public class Fight {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fighter_id_1", referencedColumnName = "id", nullable = true)
     private Character fighter1;
+
+    @Column(name = "number")
+    private int number;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fighter_id_2", referencedColumnName = "id", nullable = true)

@@ -24,6 +24,9 @@ public class UserController {
 
     @PostMapping(path = "register")
     public User register(@RequestBody @Validated User user){
+        if(userService.existsUserByUsername(user.getUsername())){
+            return null;
+        }
         return userService.register(user);
     }
 }
