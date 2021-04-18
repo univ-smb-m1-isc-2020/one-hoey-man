@@ -64,6 +64,10 @@ public class Character {
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment hand;
 
+   @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
+
     public Character() {
 
     }
