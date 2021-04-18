@@ -10,7 +10,7 @@ public interface IUserService {
 
     public Optional<User> login(String username, String password);
 
-    public User findByUsername();
+    public boolean existsUserByUsername(String username) ;
 
     User findById(int id);
 }

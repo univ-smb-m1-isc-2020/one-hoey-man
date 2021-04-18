@@ -31,4 +31,10 @@ public class CharacterService implements ICharacterService {
     public Character save(Character character) {
         return repository.save(character);
     }
+
+    @Override
+    public List<Character> findByCreatorId(int creator_id) {
+        List<Character> characters = (List<Character>) repository.findByCreatorId(new Long(creator_id));
+        return characters;
+    }
 }
