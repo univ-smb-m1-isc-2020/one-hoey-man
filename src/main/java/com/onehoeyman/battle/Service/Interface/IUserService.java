@@ -11,5 +11,7 @@ public interface IUserService {
     public Optional<User> login(String username, String password);
 
     public User findByUsername();
+
+    User findById(int id);
 }
 

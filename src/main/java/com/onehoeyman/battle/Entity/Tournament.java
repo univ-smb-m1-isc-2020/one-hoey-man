@@ -1,6 +1,7 @@
 package com.onehoeyman.battle.Entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.Set;
 
 @Entity
@@ -15,10 +16,12 @@ public class Tournament {
     @Column(name = "name")
     private String name;
 
-
+    @Column(name = "max_size")
+    private int maxSize;
+    
     @OneToMany(mappedBy = "tournament")
     private Set<Character> participants;
 
     @OneToMany(mappedBy = "tournament")
-    private Set<Fight> fights;
+    private HashMap<Integer,Fight> fights;
 }

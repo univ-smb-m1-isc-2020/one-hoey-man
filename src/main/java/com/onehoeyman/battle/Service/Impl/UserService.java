@@ -27,4 +27,10 @@ public class UserService implements IUserService {
     public User findByUsername() {
         return null;
     }
+
+    @Override
+    public User findById(int id) {
+        Optional<User> us = repository.findById(new Long(id));
+        return us.get();
+    }
 }

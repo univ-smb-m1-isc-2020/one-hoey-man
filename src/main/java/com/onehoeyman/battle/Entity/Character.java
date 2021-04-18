@@ -1,6 +1,10 @@
 package com.onehoeyman.battle.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.context.annotation.Lazy;
+
 import javax.persistence.*;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -66,7 +70,24 @@ public class Character {
 
    @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
+   @JsonBackReference
     private User creator;
+
+    public Fight getFightVictory() {
+        return fightVictory;
+    }
+
+    public void setFightVictory(Fight fightVictory) {
+        this.fightVictory = fightVictory;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
 
     public Character() {
 
