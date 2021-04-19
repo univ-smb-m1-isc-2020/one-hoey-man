@@ -1,5 +1,6 @@
 package com.onehoeyman.battle.Repository;
 
+import com.onehoeyman.battle.Entity.Character;
 import com.onehoeyman.battle.Entity.Tournament;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

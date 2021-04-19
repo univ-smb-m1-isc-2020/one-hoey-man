@@ -34,7 +34,7 @@ public class CharacterService implements ICharacterService {
 
     @Override
     public List<Character> findByCreatorId(int creator_id) {
-        List<Character> characters = (List<Character>) repository.findByCreatorId(new Long(creator_id));
+        List<Character> characters = repository.findByCreatorId(new Long(creator_id));
         return characters;
     }
 }

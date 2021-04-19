@@ -1,10 +1,8 @@
 package com.onehoeyman.battle.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -35,7 +33,7 @@ public class Character {
     private int agility;
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = true)
-    private Tournament tournament;
+    private Character tournament;
 
     @OneToOne(mappedBy = "fighter1", optional = true)
     private Fight fight1;
@@ -44,21 +42,6 @@ public class Character {
     @OneToOne(mappedBy = "winner", optional = true)
     private Fight fightVictory;
 
-    /* @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "chest_id", referencedColumnName = "id", nullable = true)
-     private Equipment chest;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "head_id", referencedColumnName = "id", nullable = true)
-     private Equipment head;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "hand_id", referencedColumnName = "id", nullable = true)
-     private Equipment hand;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "leg_id", referencedColumnName = "id", nullable = true)
-     private Equipment leg;*/
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment head;
     @OneToOne(cascade = CascadeType.ALL, optional = true)
@@ -173,11 +156,11 @@ public class Character {
         this.inventory = inventory;
     }
 
-    public Tournament getTournament() {
+    public Character getTournament() {
         return tournament;
     }
 
-    public void setTournament(Tournament tournament) {
+    public void setTournament(Character tournament) {
         this.tournament = tournament;
     }
 

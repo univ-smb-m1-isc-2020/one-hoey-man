@@ -1,9 +1,6 @@
 package com.onehoeyman.battle.Entity;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.Set;
 
 @Entity
@@ -24,7 +21,7 @@ public class Tournament {
     @Column(name = "number_of_participants")
     private int numberParticipants = 0;
 
-    @Column(name = "roundNumber")
+    @Column(name = "round_number")
     private int roundNumber = 6;
 
     @OneToMany(mappedBy = "tournament")
@@ -33,5 +30,72 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament")
     private Set<Fight> fights;
     public Tournament(){
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public int getNumberParticipants() {
+        return numberParticipants;
+    }
+
+    public void setNumberParticipants(int numberParticipants) {
+        this.numberParticipants = numberParticipants;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
+    public Set<Character> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<Character> participants) {
+        this.participants = participants;
+    }
+
+    public void addFight(Fight fight){
+        this.fights.add(fight);
+    }
+
+    public Set<Fight> getFights() {
+        return fights;
+    }
+
+    public void setFights(Set<Fight> fights) {
+        this.fights = fights;
+    }
+
+    public void registerParticipants(Character character){
+        if (numberParticipants < maxSize){
+            this.participants.add(character);
+            numberParticipants += 1;
+        }
     }
 }

@@ -30,5 +30,53 @@ public class Fight {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
+    public Fight(int number, Tournament tournament) {
+        this.number = number;
+        this.tournament = tournament;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Character getFighter1() {
+        return fighter1;
+    }
+
+    public void setFighter1(Character fighter1) {
+        this.fighter1 = fighter1;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Character getFighter2() {
+        return fighter2;
+    }
+
+    public void setFighter2(Character fighter2) {
+        this.fighter2 = fighter2;
+    }
+
+    public Character getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Character winner) {
+        this.winner = winner;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 
 }
