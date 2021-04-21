@@ -1,5 +1,6 @@
 package com.onehoeyman.battle.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -25,6 +26,9 @@ public class User {
 
     @OneToMany(mappedBy = "creator")
     private Set<Character> characters;
+
+    public User() {
+    }
 
     public long getId() {
         return id;

@@ -1,7 +1,6 @@
 package com.onehoeyman.battle.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,6 +16,8 @@ public class Character {
             inverseJoinColumns = @JoinColumn(name = "equipment_id")
     )
     Set<Equipment> inventory;
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +25,6 @@ public class Character {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "max_hp")
-    private int maxHp;
 
     @Column(name = "hp")
     private int hp;
@@ -40,8 +38,12 @@ public class Character {
     @Column(name = "agility")
     private int agility;
 
+    @Column(name = "damage")
+    private int damage;
+
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = true)
+    @JsonIgnore
     private Tournament tournament;
 
     @OneToOne(mappedBy = "fighter1", optional = true)
@@ -67,6 +69,7 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
+    @JsonIgnore
     private User creator;
 
 
@@ -120,14 +123,6 @@ public class Character {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
     }
 
     public int getHp() {
@@ -209,4 +204,41 @@ public class Character {
     public void setChest(Equipment chest) {
         this.chest = chest;
     }
+
+    public int getTotalAgility(){
+        int res = this.agility;
+        res +=  leg   != null ? leg.getAgilityBonus()       : 0;
+        res +=  chest != null ? chest.getAgilityBonus()     : 0;
+        res +=  hand  != null ? hand.getAgilityBonus()      : 0;
+        res +=  head  != null ? head.getAgilityBonus()      : 0;
+        return res;
+    }
+
+    public int getTotalHp(){
+        int res = this.hp;
+        res +=  leg   != null ? leg.getHpBonus()        : 0;
+        res +=  chest != null ? chest.getHpBonus()      : 0;
+        res +=  hand  != null ? hand.getHpBonus()       : 0;
+        res +=  head  != null ? head.getHpBonus()       : 0;
+        return res;
+    }
+
+    public int getTotalStrength(){
+        int res = this.strength;
+        res +=  leg   != null ? leg.getStrengthBonus()      : 0;
+        res +=  chest != null ? chest.getStrengthBonus()    : 0;
+        res +=  hand  != null ? hand.getStrengthBonus()     : 0;
+        res +=  head  != null ? head.getStrengthBonus()     : 0;
+        return res;
+    }
+
+    public int getTotalIntelligence(){
+        int res = this.intelligence;
+        res +=  leg   != null ? leg.getIntelligenceBonus()      : 0;
+        res +=  chest != null ? chest.getIntelligenceBonus()    : 0;
+        res +=  hand  != null ? hand.getIntelligenceBonus()     : 0;
+        res +=  head  != null ? head.getIntelligenceBonus()     : 0;
+        return res;
+    }
+
 }

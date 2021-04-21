@@ -41,7 +41,7 @@ public class TournamentController {
     @PostMapping(path = "create",consumes = "application/json", produces = "application/json")
     public Tournament create(@RequestBody Tournament tournament) {
         Tournament tournament_created = tournamentService.save(tournament);
-        for (int i = 1; i <= tournament_created.getMaxSize()/2; i++) {
+        for (int i = 0; i < tournament_created.getMaxSize(); i++) {
             Fight fight = new Fight(i, tournament_created);
             fightService.save(fight);
         }

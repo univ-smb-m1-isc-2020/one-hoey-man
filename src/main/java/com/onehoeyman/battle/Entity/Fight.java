@@ -1,6 +1,8 @@
 package com.onehoeyman.battle.Entity;
 
 import com.fasterxml.jackson.annotation.*;
+import com.onehoeyman.battle.Service.Interface.ICharacterService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -32,6 +34,7 @@ public class Fight {
 
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
+    @JsonIgnore
     private Tournament tournament;
 
     public Fight() {
@@ -86,4 +89,7 @@ public class Fight {
         this.tournament = tournament;
     }
 
+    public void startFight() {
+
+    }
 }
