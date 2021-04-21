@@ -60,7 +60,10 @@ public class TournamentLogicService {
 
     }
 
-    public void startFighting(Tournament tournament) {
+    private void prepareNextRound(Tournament tournament) {
+    }
+
+    private void startFighting(Tournament tournament) {
         int borneSup = (int) Math.pow(2, tournament.getRoundNumber()) - 1;
         int borneInf = (int) Math.pow(2, tournament.getRoundNumber() - 1);
         for (Fight fight :
@@ -91,10 +94,10 @@ public class TournamentLogicService {
             int tirage = rand.nextInt(100) + 1;
             if (turn % 2 == 0) {
                 // Joueur 1 attaque
-                    
+                    System.out.println("x");
             } else {
                 // Joueur 2 attaque
-
+                System.out.println("x");
             }
         }
 
