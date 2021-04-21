@@ -1,12 +1,14 @@
 package com.onehoeyman.battle.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "character")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
     @ManyToMany
     @JoinTable(
@@ -19,42 +21,58 @@ public class Character {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "max_hp")
     private int maxHp;
+
     @Column(name = "hp")
     private int hp;
+
     @Column(name = "strength")
     private int strength;
+
     @Column(name = "intelligence")
     private int intelligence;
+
     @Column(name = "agility")
     private int agility;
+
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = true)
-    private Character tournament;
+    private Tournament tournament;
 
     @OneToOne(mappedBy = "fighter1", optional = true)
     private Fight fight1;
+
     @OneToOne(mappedBy = "fighter2", optional = true)
     private Fight fight2;
+
     @OneToOne(mappedBy = "winner", optional = true)
     private Fight fightVictory;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment head;
+
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment chest;
+
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment leg;
+
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment hand;
 
-   @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
-   @JsonBackReference
     private User creator;
+
+
+    public Character() {
+
+    }
 
     public Fight getFightVictory() {
         return fightVictory;
@@ -70,10 +88,6 @@ public class Character {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    public Character() {
-
     }
 
     public Equipment getLeg() {
@@ -156,11 +170,11 @@ public class Character {
         this.inventory = inventory;
     }
 
-    public Character getTournament() {
+    public Tournament getTournament() {
         return tournament;
     }
 
-    public void setTournament(Character tournament) {
+    public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 

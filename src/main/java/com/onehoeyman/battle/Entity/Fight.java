@@ -1,9 +1,12 @@
 package com.onehoeyman.battle.Entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "fight")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Fight {
 
     @Id
@@ -11,12 +14,13 @@ public class Fight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "number")
+    private int number;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fighter_id_1", referencedColumnName = "id", nullable = true)
     private Character fighter1;
 
-    @Column(name = "number")
-    private int number;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fighter_id_2", referencedColumnName = "id", nullable = true)
@@ -29,6 +33,9 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
+
+    public Fight() {
+    }
 
     public Fight(int number, Tournament tournament) {
         this.number = number;

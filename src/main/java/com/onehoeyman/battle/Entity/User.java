@@ -1,10 +1,15 @@
 package com.onehoeyman.battle.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "utilisateur")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User {
     @Id
     @Column(name = "id")
@@ -17,6 +22,7 @@ public class User {
     private String password;
     @Column(name = "email")
     private String email;
+
     @OneToMany(mappedBy = "creator")
     private Set<Character> characters;
 

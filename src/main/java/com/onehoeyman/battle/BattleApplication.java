@@ -8,12 +8,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
 @SpringBootApplication
 @EntityScan("com.onehoeyman.battle.Entity")
 @EnableJpaRepositories("com.onehoeyman.battle.Repository")
+@EnableScheduling
 public class BattleApplication {
 
     public static void main(String[] args) {
