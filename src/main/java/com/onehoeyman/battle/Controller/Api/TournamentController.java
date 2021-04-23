@@ -58,8 +58,8 @@ public class TournamentController {
      */
     @PostMapping(path = "{tournament_id}/register/{character_id}", produces = "application/json")
     public Tournament register(@PathVariable int tournament_id, @PathVariable int character_id) {
-        Optional<Tournament> tournament = tournamentService.findById(new Long(tournament_id));
-        Optional<Character> character = characterService.findById(new Long(character_id));
+        Optional<Tournament> tournament = tournamentService.findById((long) tournament_id);
+        Optional<Character> character = characterService.findById((long) character_id);
 
         Tournament tournament1 = tournament.get();
         tournament1.registerParticipants(character.get());

@@ -1,14 +1,14 @@
 package com.onehoeyman.battle.Entity;
 
-import com.fasterxml.jackson.annotation.*;
-import com.onehoeyman.battle.Service.Interface.ICharacterService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "fight")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Fight {
 
     @Id
@@ -31,18 +31,25 @@ public class Fight {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "winner_id", referencedColumnName = "id", nullable = true)
     private Character winner;
-
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
     @JsonIgnore
-    private Tournament tournament;
+    private Tournament tournoi;
 
     public Fight() {
     }
 
     public Fight(int number, Tournament tournament) {
         this.number = number;
-        this.tournament = tournament;
+        this.tournoi = tournament;
+    }
+
+    public Tournament getTournoi() {
+        return tournoi;
+    }
+
+    public void setTournoi(Tournament tournament) {
+        this.tournoi = tournament;
     }
 
     public long getId() {
@@ -83,10 +90,6 @@ public class Fight {
 
     public void setWinner(Character winner) {
         this.winner = winner;
-    }
-
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
     }
 
     public void startFight() {

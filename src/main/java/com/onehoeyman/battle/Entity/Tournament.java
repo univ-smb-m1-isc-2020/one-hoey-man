@@ -31,7 +31,7 @@ public class Tournament {
     @JsonIgnore
     private Set<Character> participants;
 
-    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tournoi", cascade = CascadeType.ALL)
     private Set<Fight> fights;
 
     @Column(name = "status")
@@ -113,7 +113,12 @@ public class Tournament {
         if (numberParticipants < maxSize) {
             this.participants.add(character);
 
-            int numberCombat = numberParticipants / 2 + 1;
+            character.setHead(null);
+            character.setLeg(null);
+            character.setChest(null);
+            character.setHand(null);
+
+            int numberCombat = (int) (maxSize - 1 - Math.floor((double)(numberParticipants / 2)));
             for (Fight fight :
                     this.fights) {
                 if (fight.getNumber() == numberCombat) {
@@ -133,7 +138,5 @@ public class Tournament {
 
         }
     }
-
-    public void startFighting() {
 
 }

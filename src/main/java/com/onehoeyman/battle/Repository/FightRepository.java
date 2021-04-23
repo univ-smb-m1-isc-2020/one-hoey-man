@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FightRepository extends CrudRepository<Fight, Long> {
 
-    public Fight findByTournamentAndNumber(Tournament tournament, int number);
+    public Fight findByTournoiAndNumber(Tournament tournament, int number);
+
 }

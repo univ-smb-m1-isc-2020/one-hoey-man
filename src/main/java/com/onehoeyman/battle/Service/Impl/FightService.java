@@ -1,6 +1,7 @@
 package com.onehoeyman.battle.Service.Impl;
 
 import com.onehoeyman.battle.Entity.Fight;
+import com.onehoeyman.battle.Entity.Tournament;
 import com.onehoeyman.battle.Repository.FightRepository;
 import com.onehoeyman.battle.Service.Interface.IFightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,9 @@ public class FightService implements IFightService {
     @Override
     public Fight save(Fight fight) {
         return repository.save(fight);
+    }
+
+    public Fight findByTournamentAndNumber(Tournament tournament, int number) {
+        return repository.findByTournoiAndNumber(tournament, number);
     }
 }
