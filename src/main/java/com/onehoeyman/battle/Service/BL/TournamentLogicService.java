@@ -48,7 +48,7 @@ public class TournamentLogicService {
         }
     }
 
-    @Scheduled(fixedDelay = 20000)
+    @Scheduled(fixedDelay = 60000)
     public void canStartTournament() throws JSONException, IOException {
         System.out.println("Beginning ");
         List<Tournament> tournamentList = tournamentService.findAll();
@@ -76,7 +76,7 @@ public class TournamentLogicService {
 
 
     private void cleanFighters(Tournament tournament) {
-        System.out.println("Size "  + tournament.getParticipants().size());
+        System.out.println("Size " + tournament.getParticipants().size());
         /*for (Character character :
                 tournament.getParticipants()) {
             character.setHead(null);
