@@ -33,7 +33,7 @@ public class CharacterController {
      * @param creator_id : Creator's id
      * @return Character[]
      */
-    @GetMapping(path = "{creator_id}")
+    @GetMapping(path = "creator/{creator_id}")
     public List<Character> findCharactersByCreatorId(@PathVariable int creator_id) {
         List<Character> characters = (List<Character>) characterService.findByCreatorId(creator_id);
         return characters;

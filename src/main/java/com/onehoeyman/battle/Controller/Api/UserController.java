@@ -22,8 +22,8 @@ public class UserController {
         return userService.login(form.getUsername(), form.getPassword());
     }
 
-    @PostMapping(path = "register")
-    public User register(@RequestBody @Validated User user){
+    @PostMapping(path = "register", consumes = "application/json")
+    public User register(@RequestBody User user){
         if(userService.existsUserByUsername(user.getUsername())){
             return null;
         }

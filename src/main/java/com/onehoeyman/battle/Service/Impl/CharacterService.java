@@ -1,6 +1,7 @@
 package com.onehoeyman.battle.Service.Impl;
 
 import com.onehoeyman.battle.Entity.Character;
+import com.onehoeyman.battle.Entity.Tournament;
 import com.onehoeyman.battle.Repository.CharacterRepository;
 import com.onehoeyman.battle.Service.Interface.ICharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,12 @@ public class CharacterService implements ICharacterService {
 
     @Override
     public List<Character> findByCreatorId(int creator_id) {
-        List<Character> characters = (List<Character>) repository.findByCreatorId(new Long(creator_id));
+        List<Character> characters = repository.findByCreatorId(new Long(creator_id));
         return characters;
+    }
+
+    @Override
+    public List<Character> findCharactersByTournament(Tournament tournament) {
+        return repository.findCharactersByTournament(tournament);
     }
 }

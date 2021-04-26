@@ -1,15 +1,18 @@
 package com.onehoeyman.battle.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.context.annotation.Lazy;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
 @Table(name = "character")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
+    @Expose
     @ManyToMany
     @JoinTable(
             name = "equipment_owned",
@@ -17,68 +20,81 @@ public class Character {
             inverseJoinColumns = @JoinColumn(name = "equipment_id")
     )
     Set<Equipment> inventory;
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private long id;
+
     @Column(name = "name")
+    @Expose
     private String name;
-    @Column(name = "max_hp")
-    private int maxHp;
+
+    @Expose
     @Column(name = "hp")
     private int hp;
+
+    @Expose
     @Column(name = "strength")
     private int strength;
+
+    @Expose
     @Column(name = "intelligence")
     private int intelligence;
+
+    @Expose
     @Column(name = "agility")
     private int agility;
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = true)
+    @JsonIgnore
     private Tournament tournament;
-
     @OneToOne(mappedBy = "fighter1", optional = true)
     private Fight fight1;
     @OneToOne(mappedBy = "fighter2", optional = true)
     private Fight fight2;
-    @OneToOne(mappedBy = "winner", optional = true)
-    private Fight fightVictory;
-
-    /* @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "chest_id", referencedColumnName = "id", nullable = true)
-     private Equipment chest;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "head_id", referencedColumnName = "id", nullable = true)
-     private Equipment head;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "hand_id", referencedColumnName = "id", nullable = true)
-     private Equipment hand;
-
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "leg_id", referencedColumnName = "id", nullable = true)
-     private Equipment leg;*/
+    @Expose
+    @Column(name = "number_victory")
+    private int numberVictory = 0;
+    @Expose
+    @Column(name = "tournament_victory")
+    private int tournamentVictory = 0;
+    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment head;
+    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment chest;
+    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment leg;
+    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment hand;
-
-   @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
-   @JsonBackReference
+    @JsonIgnore
     private User creator;
+    public Character() {
 
-    public Fight getFightVictory() {
-        return fightVictory;
     }
 
-    public void setFightVictory(Fight fightVictory) {
-        this.fightVictory = fightVictory;
+    public int getTournamentVictory() {
+        return tournamentVictory;
+    }
+
+    public void setTournamentVictory(int tournamentVictory) {
+        this.tournamentVictory = tournamentVictory;
+    }
+
+    public int getNumberVictory() {
+        return numberVictory;
+    }
+
+    public void setNumberVictory(int numberVictory) {
+        this.numberVictory = numberVictory;
     }
 
     public User getCreator() {
@@ -87,10 +103,6 @@ public class Character {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    public Character() {
-
     }
 
     public Equipment getLeg() {
@@ -123,14 +135,6 @@ public class Character {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
     }
 
     public int getHp() {
@@ -212,4 +216,41 @@ public class Character {
     public void setChest(Equipment chest) {
         this.chest = chest;
     }
+
+    public int getTotalAgility() {
+        int res = this.agility;
+        res += leg != null ? leg.getAgilityBonus() : 0;
+        res += chest != null ? chest.getAgilityBonus() : 0;
+        res += hand != null ? hand.getAgilityBonus() : 0;
+        res += head != null ? head.getAgilityBonus() : 0;
+        return res;
+    }
+
+    public int getTotalHp() {
+        int res = this.hp;
+        res += leg != null ? leg.getHpBonus() : 0;
+        res += chest != null ? chest.getHpBonus() : 0;
+        res += hand != null ? hand.getHpBonus() : 0;
+        res += head != null ? head.getHpBonus() : 0;
+        return res;
+    }
+
+    public int getTotalStrength() {
+        int res = this.strength;
+        res += leg != null ? leg.getStrengthBonus() : 0;
+        res += chest != null ? chest.getStrengthBonus() : 0;
+        res += hand != null ? hand.getStrengthBonus() : 0;
+        res += head != null ? head.getStrengthBonus() : 0;
+        return res;
+    }
+
+    public int getTotalIntelligence() {
+        int res = this.intelligence;
+        res += leg != null ? leg.getIntelligenceBonus() : 0;
+        res += chest != null ? chest.getIntelligenceBonus() : 0;
+        res += hand != null ? hand.getIntelligenceBonus() : 0;
+        res += head != null ? head.getIntelligenceBonus() : 0;
+        return res;
+    }
+
 }
