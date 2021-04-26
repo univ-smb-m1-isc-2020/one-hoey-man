@@ -20,6 +20,9 @@ public class CharacterController {
 
     /**
      * All characters
+     * Character returned {
+     *
+     * }
      * @return Character[]
      */
     @GetMapping(path = "")
