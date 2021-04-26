@@ -143,9 +143,9 @@
                 <configuration>
                     <environmentVariables>
                         <!-- Default config for vanilla install of a local postgresql -->
-                        <SPRING_DATASOURCE_URL>jdbc:postgresql://localhost:5432/db_one_hoey_man</SPRING_DATASOURCE_URL>
-                        <SPRING_DATASOURCE_USERNAME>one_hoey_root</SPRING_DATASOURCE_USERNAME>
-                        <SPRING_DATASOURCE_PASSWORD>hoeyhoey</SPRING_DATASOURCE_PASSWORD>
+                        <SPRING_DATASOURCE_URL>jdbc:postgresql://localhost:5432/postgres</SPRING_DATASOURCE_URL>
+                        <SPRING_DATASOURCE_USERNAME>postgres</SPRING_DATASOURCE_USERNAME>
+                        <SPRING_DATASOURCE_PASSWORD>postgres</SPRING_DATASOURCE_PASSWORD>
                         <SPRING_JPA_HIBERNATE_DDL_AUTO>update</SPRING_JPA_HIBERNATE_DDL_AUTO>
                         <SPRING_JPA_DATABASE>POSTGRESQL</SPRING_JPA_DATABASE>
                     </environmentVariables>
