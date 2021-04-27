@@ -3,7 +3,6 @@ package com.onehoeyman.battle.Entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.Set;
 @Table(name = "character")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
-    @Expose
     @ManyToMany
     @JoinTable(
             name = "equipment_owned",
@@ -25,26 +23,20 @@ public class Character {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
     private long id;
 
     @Column(name = "name")
-    @Expose
     private String name;
 
-    @Expose
     @Column(name = "hp")
     private int hp;
 
-    @Expose
     @Column(name = "strength")
     private int strength;
 
-    @Expose
     @Column(name = "intelligence")
     private int intelligence;
 
-    @Expose
     @Column(name = "agility")
     private int agility;
     @ManyToOne
@@ -55,22 +47,16 @@ public class Character {
     private Fight fight1;
     @OneToOne(mappedBy = "fighter2", optional = true)
     private Fight fight2;
-    @Expose
     @Column(name = "number_victory")
     private int numberVictory = 0;
-    @Expose
     @Column(name = "tournament_victory")
     private int tournamentVictory = 0;
-    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment head;
-    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment chest;
-    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment leg;
-    @Expose
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Equipment hand;
     @ManyToOne

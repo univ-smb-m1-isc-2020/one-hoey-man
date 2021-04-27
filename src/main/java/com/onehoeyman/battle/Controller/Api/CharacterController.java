@@ -20,7 +20,7 @@ public class CharacterController {
 
     /**
      * All characters
-     * Character returned {
+     * One character returned  : {
      *
      * }
      * @return Character[]

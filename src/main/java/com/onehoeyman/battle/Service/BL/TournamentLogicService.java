@@ -1,15 +1,13 @@
 package com.onehoeyman.battle.Service.BL;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehoeyman.battle.Entity.Character;
 import com.onehoeyman.battle.Entity.Fight;
 import com.onehoeyman.battle.Entity.Status;
 import com.onehoeyman.battle.Entity.Tournament;
-import com.onehoeyman.battle.Service.Interface.ICharacterService;
-import com.onehoeyman.battle.Service.Interface.IFightService;
-import com.onehoeyman.battle.Service.Interface.ITournamentService;
+import com.onehoeyman.battle.Service.Impl.CharacterService;
+import com.onehoeyman.battle.Service.Impl.FightService;
+import com.onehoeyman.battle.Service.Impl.TournamentService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -28,12 +26,45 @@ import java.util.Random;
 @Transactional
 public class TournamentLogicService {
 
+    private TournamentService tournamentService;
+    private CharacterService characterService;
+    private FightService fightService;
+
+    private final ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+
+    public TournamentLogicService() {
+    }
+
     @Autowired
-    ITournamentService tournamentService;
-    @Autowired
-    ICharacterService characterService;
-    @Autowired
-    IFightService fightService;
+    public TournamentLogicService(FightService fightService, CharacterService characterService, TournamentService tournamentService) {
+        this.fightService = fightService;
+        this.characterService = characterService;
+        this.tournamentService = tournamentService;
+    }
+
+    public TournamentService getTournamentService() {
+        return tournamentService;
+    }
+
+    public void setTournamentService(TournamentService tournamentService) {
+        this.tournamentService = tournamentService;
+    }
+
+    public CharacterService getCharacterService() {
+        return characterService;
+    }
+
+    public void setCharacterService(CharacterService characterService) {
+        this.characterService = characterService;
+    }
+
+    public FightService getFightService() {
+        return fightService;
+    }
+
+    public void setFightService(FightService fightService) {
+        this.fightService = fightService;
+    }
 
     @Scheduled(fixedRate = 10000)
     public void startTournament() {
@@ -49,7 +80,7 @@ public class TournamentLogicService {
     }
 
     @Scheduled(fixedDelay = 60000)
-    public void canStartTournament() throws JSONException, IOException {
+    public void canStartTournament() throws Exception {
         System.out.println("Beginning ");
         List<Tournament> tournamentList = tournamentService.findAll();
         for (Tournament tournament :
@@ -118,7 +149,7 @@ public class TournamentLogicService {
         tournament.setRoundNumber(tournament.getRoundNumber() - 1);
     }
 
-    private void startFighting(Tournament tournament) throws JSONException, IOException {
+    private void startFighting(Tournament tournament) throws Exception {
         int borneSup = (int) Math.pow(2, tournament.getRoundNumber()) - 1;
         int borneInf = (int) Math.pow(2, tournament.getRoundNumber() - 1);
         Hibernate.initialize(tournament.getFights());
@@ -130,11 +161,13 @@ public class TournamentLogicService {
         }
     }
 
-    public void startFight(Fight fight) throws JSONException, IOException {
+    public void startFight(Fight fight) throws Exception {
+
         JSONObject json = new JSONObject();
-        JsonArray messages = new JsonArray();
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        //JsonArray messages = new JsonArray();
         Random rand = new Random();
+
+
         Hibernate.initialize(fight.getFighter1());
         Hibernate.initialize(fight.getFighter2());
 
@@ -145,8 +178,8 @@ public class TournamentLogicService {
         int damageFighter2 = 0;
         int turn = fighter1.getTotalAgility() > fighter2.getTotalAgility() ? 0 : 1;
 
-        messages.add((turn % 2 == 0 ? fighter1.getName() : fighter2.getName())
-                + " a l'avantage, à lui de commencer");
+        //messages.add((turn % 2 == 0 ? fighter1.getName() : fighter2.getName())
+        //       + " a l'avantage, à lui de commencer");
 
         int jetAttaque;
         int jetCritique;
@@ -165,42 +198,42 @@ public class TournamentLogicService {
                 // Joueur 1 attaque
                 if (jetAttaque > 2 * fighter2.getTotalAgility()) {
 
-                    messages.add(fighter1.getName() + " va attaquer !");
+                    //messages.add(fighter1.getName() + " va attaquer !");
 
                     jetCritique = rand.nextInt(100) + 1;
                     if (jetCritique == 100) {
-                        messages.add("Les dieux accompagnent la frappe de " + fighter1.getName());
+                        //messages.add("Les dieux accompagnent la frappe de " + fighter1.getName());
                         multiplicateurDegat = 3;
                     } else if (jetCritique > 100 - fighter1.getTotalIntelligence() * 1.5) {
-                        messages.add("Ouch ! Critical hit");
+                        //messages.add("Ouch ! Critical hit");
                         multiplicateurDegat = 2;
                     }
                     int degat = (rand.nextInt((int) (fighter1.getTotalStrength() * coefficientDegat)) + 1) * multiplicateurDegat;
                     damageFighter2 += degat;
-                    messages.add(fighter1.getName() + " a infligé " + degat + " !");
+                    //messages.add(fighter1.getName() + " a infligé " + degat + " !");
                 } else {
-                    messages.add("Oh no ! " + fighter1.getName() + " a manqué son coup !");
+                    //messages.add("Oh no ! " + fighter1.getName() + " a manqué son coup !");
                 }
 
             } else {
                 // Joueur 2 attaque
                 if (jetAttaque > 2 * fighter1.getTotalAgility()) {
 
-                    messages.add(fighter2.getName() + " va attaquer !");
+                    //messages.add(fighter2.getName() + " va attaquer !");
 
                     jetCritique = rand.nextInt(100) + 1;
                     if (jetCritique == 100) {
-                        messages.add("Les dieux accompagnent la frappe de " + fighter2.getName());
+                        //messages.add("Les dieux accompagnent la frappe de " + fighter2.getName());
                         multiplicateurDegat = 3;
                     } else if (jetCritique > 100 - fighter2.getTotalIntelligence() * 1.5) {
-                        messages.add("Ouch ! Critical hit");
+                        //messages.add("Ouch ! Critical hit");
                         multiplicateurDegat = 2;
                     }
                     int degat = (rand.nextInt((int) (fighter2.getTotalStrength() * coefficientDegat)) + 1) * multiplicateurDegat;
                     damageFighter1 += degat;
-                    messages.add(fighter2.getName() + " a infligé " + degat + " !");
+                    //messages.add(fighter2.getName() + " a infligé " + degat + " !");
                 } else {
-                    messages.add("Oh no ! " + fighter2.getName() + " a manqué son coup !");
+                    //messages.add("Oh no ! " + fighter2.getName() + " a manqué son coup !");
                 }
             }
 
@@ -216,9 +249,11 @@ public class TournamentLogicService {
             }
             fight.setWinner(fighter2);
 
-            messages.add(fighter2.getName() + " a gagné contre " + fighter1.getName());
-            json.put("winner", gson.toJson(fighter2));
+            //messages.add(fighter2.getName() + " a gagné contre " + fighter1.getName());
+
+            json.put("winner", mapper.writeValueAsString(fighter2));
             json.put("winner_name", fighter2.getName());
+
 
         } else {
             fighter1.getInventory().addAll(fighter2.getInventory());
@@ -230,12 +265,14 @@ public class TournamentLogicService {
 
             fight.setWinner(fighter1);
 
-            messages.add(fighter1.getName() + " a gagné contre " + fighter2.getName());
-            json.put("winner", gson.toJson(fighter1));
+            //messages.add(fighter1.getName() + " a gagné contre " + fighter2.getName());
+
+            json.put("winner", mapper.writeValueAsString(fighter1));
             json.put("winner_name", fighter1.getName());
 
+
         }
-        json.put("messages", messages);
+        //json.put("messages", messages);
         String filename = "resume_" + fight.getTournoi().getId() + "_" + fight.getId();
         Files.write(Paths.get("./log/" + filename), json.toString().getBytes());
 
