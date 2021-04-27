@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -93,7 +94,7 @@ public class TournamentLogicService {
                     tournament.setStatus(Status.Finished);
 
 
-                    //cleanFighters(tournament);
+//                    cleanFighters(tournament);
                 } else {
                     tournament.setStatus(Status.InProgress);
                     //reloadFighter(tournament);
@@ -163,8 +164,10 @@ public class TournamentLogicService {
 
     public void startFight(Fight fight) throws Exception {
 
-        JSONObject json = new JSONObject();
-        //JsonArray messages = new JsonArray();
+        Combat combat;
+        Character winner;
+
+        ArrayList<String> messages = new ArrayList<String>();
         Random rand = new Random();
 
 
@@ -178,8 +181,8 @@ public class TournamentLogicService {
         int damageFighter2 = 0;
         int turn = fighter1.getTotalAgility() > fighter2.getTotalAgility() ? 0 : 1;
 
-        //messages.add((turn % 2 == 0 ? fighter1.getName() : fighter2.getName())
-        //       + " a l'avantage, à lui de commencer");
+        messages.add((turn % 2 == 0 ? fighter1.getName() : fighter2.getName())
+               + " a l'avantage, à lui de commencer");
 
         int jetAttaque;
         int jetCritique;
@@ -198,42 +201,42 @@ public class TournamentLogicService {
                 // Joueur 1 attaque
                 if (jetAttaque > 2 * fighter2.getTotalAgility()) {
 
-                    //messages.add(fighter1.getName() + " va attaquer !");
+                    messages.add(fighter1.getName() + " va attaquer !");
 
                     jetCritique = rand.nextInt(100) + 1;
                     if (jetCritique == 100) {
-                        //messages.add("Les dieux accompagnent la frappe de " + fighter1.getName());
+                        messages.add("Les dieux accompagnent la frappe de " + fighter1.getName());
                         multiplicateurDegat = 3;
                     } else if (jetCritique > 100 - fighter1.getTotalIntelligence() * 1.5) {
-                        //messages.add("Ouch ! Critical hit");
+                        messages.add("Ouch ! Critical hit");
                         multiplicateurDegat = 2;
                     }
                     int degat = (rand.nextInt((int) (fighter1.getTotalStrength() * coefficientDegat)) + 1) * multiplicateurDegat;
                     damageFighter2 += degat;
-                    //messages.add(fighter1.getName() + " a infligé " + degat + " !");
+                    messages.add(fighter1.getName() + " a infligé " + degat + " !");
                 } else {
-                    //messages.add("Oh no ! " + fighter1.getName() + " a manqué son coup !");
+                    messages.add("Oh no ! " + fighter1.getName() + " a manqué son coup !");
                 }
 
             } else {
                 // Joueur 2 attaque
                 if (jetAttaque > 2 * fighter1.getTotalAgility()) {
 
-                    //messages.add(fighter2.getName() + " va attaquer !");
+                    messages.add(fighter2.getName() + " va attaquer !");
 
                     jetCritique = rand.nextInt(100) + 1;
                     if (jetCritique == 100) {
-                        //messages.add("Les dieux accompagnent la frappe de " + fighter2.getName());
+                        messages.add("Les dieux accompagnent la frappe de " + fighter2.getName());
                         multiplicateurDegat = 3;
                     } else if (jetCritique > 100 - fighter2.getTotalIntelligence() * 1.5) {
-                        //messages.add("Ouch ! Critical hit");
+                        messages.add("Ouch ! Critical hit");
                         multiplicateurDegat = 2;
                     }
                     int degat = (rand.nextInt((int) (fighter2.getTotalStrength() * coefficientDegat)) + 1) * multiplicateurDegat;
                     damageFighter1 += degat;
-                    //messages.add(fighter2.getName() + " a infligé " + degat + " !");
+                    messages.add(fighter2.getName() + " a infligé " + degat + " !");
                 } else {
-                    //messages.add("Oh no ! " + fighter2.getName() + " a manqué son coup !");
+                    messages.add("Oh no ! " + fighter2.getName() + " a manqué son coup !");
                 }
             }
 
@@ -245,14 +248,13 @@ public class TournamentLogicService {
 
             fighter2.setNumberVictory(fighter2.getNumberVictory() + 1);
             if (fight.getNumber() == 1) {
-                fighter2.setTournamentVictory(fighter2.getNumberVictory() + 1);
+                fighter2.setTournamentVictory(fighter2.getTournamentVictory() + 1);
             }
             fight.setWinner(fighter2);
 
-            //messages.add(fighter2.getName() + " a gagné contre " + fighter1.getName());
+            messages.add(fighter2.getName() + " a gagné contre " + fighter1.getName());
 
-            json.put("winner", mapper.writeValueAsString(fighter2));
-            json.put("winner_name", fighter2.getName());
+            winner = fighter2;
 
 
         } else {
@@ -260,21 +262,24 @@ public class TournamentLogicService {
 
             fighter1.setNumberVictory(fighter1.getNumberVictory() + 1);
             if (fight.getNumber() == 1) {
-                fighter1.setTournamentVictory(fighter1.getNumberVictory() + 1);
+                fighter1.setTournamentVictory(fighter1.getTournamentVictory() + 1);
             }
 
             fight.setWinner(fighter1);
 
-            //messages.add(fighter1.getName() + " a gagné contre " + fighter2.getName());
+            messages.add(fighter1.getName() + " a gagné contre " + fighter2.getName());
 
-            json.put("winner", mapper.writeValueAsString(fighter1));
-            json.put("winner_name", fighter1.getName());
+            winner = fighter1;
 
 
         }
-        //json.put("messages", messages);
+
+        combat = new Combat(winner,messages);
+
+
+        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(combat));
         String filename = "resume_" + fight.getTournoi().getId() + "_" + fight.getId();
-        Files.write(Paths.get("./log/" + filename), json.toString().getBytes());
+        //Files.write(Paths.get("./log/" + filename), json.toString().getBytes());
 
     }
 
