@@ -32,7 +32,9 @@ public class UserController {
      * Register user
      *
      * @param {"username": , "password":, "email"}
-     * @return
+     * @return {
+     *
+     * }
      */
     @PostMapping(path = "register", consumes = "application/json")
     @ResponseBody

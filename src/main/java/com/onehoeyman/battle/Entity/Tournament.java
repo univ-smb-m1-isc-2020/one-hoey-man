@@ -27,7 +27,7 @@ public class Tournament {
     @Column(name = "round_number")
     private int roundNumber = 2;
 
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(mappedBy = "tournament",orphanRemoval = true)
     @JsonIgnore
     private Set<Character> participants;
 

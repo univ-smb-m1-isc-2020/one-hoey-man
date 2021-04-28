@@ -32,4 +32,13 @@ public class TournamentService  implements ITournamentService {
     public Tournament save(Tournament tournament) {
         return repository.save(tournament);
     }
+
+    @Override
+    public void delete(Tournament tournament) {
+        for (Character character:
+             tournament.getParticipants()) {
+            character.setTournament(null);
+        }
+        //repository.delete(tournament);
+    }
 }

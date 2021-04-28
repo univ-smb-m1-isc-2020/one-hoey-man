@@ -107,6 +107,20 @@ public class TournamentLogicService {
 
     }
 
+    @Scheduled(fixedDelay = 60000)
+    public void deleteTournament() throws Exception {
+        System.out.println("Delete");
+        List<Tournament> tournamentList = tournamentService.findAll();
+        for (Tournament tournament :
+                tournamentList) {
+            if (tournament.getStatus() == Status.Finished) {
+                tournamentService.delete(tournament);
+            }
+        }
+
+    }
+
+
 
     private void cleanFighters(Tournament tournament) {
         System.out.println("Size " + tournament.getParticipants().size());

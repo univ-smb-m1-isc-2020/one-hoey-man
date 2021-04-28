@@ -43,10 +43,10 @@ public class Character {
     @JoinColumn(name = "tournament_id", nullable = true)
     @JsonIgnore
     private Tournament tournament;
-    @OneToOne(mappedBy = "fighter1", optional = true)
+    @OneToOne(mappedBy = "fighter1", optional = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private Fight fight1;
-    @OneToOne(mappedBy = "fighter2", optional = true)
+    @OneToOne(mappedBy = "fighter2", optional = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private Fight fight2;
     @Column(name = "number_victory")

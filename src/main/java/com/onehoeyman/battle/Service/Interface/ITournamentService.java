@@ -14,5 +14,5 @@ public interface ITournamentService {
 
     public Tournament save(Tournament tournament);
 
-
+    void delete(Tournament tournament);
 }

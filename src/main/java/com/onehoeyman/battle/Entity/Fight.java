@@ -19,18 +19,18 @@ public class Fight {
     @Column(name = "number")
     private int number;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "fighter_id_1", referencedColumnName = "id", nullable = true)
     private Character fighter1;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "fighter_id_2", referencedColumnName = "id", nullable = true)
     private Character fighter2;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "winner_id", referencedColumnName = "id", nullable = true)
     private Character winner;
+
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
     @JsonIgnore
@@ -92,7 +92,4 @@ public class Fight {
         this.winner = winner;
     }
 
-    public void startFight() {
-
-    }
 }

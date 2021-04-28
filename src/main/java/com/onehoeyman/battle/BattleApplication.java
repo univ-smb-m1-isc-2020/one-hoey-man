@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Arrays;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
 @EntityScan("com.onehoeyman.battle.Entity")
 @EnableJpaRepositories("com.onehoeyman.battle.Repository")
 @EnableScheduling
+@CrossOrigin(origins = "*")
 public class BattleApplication {
 
     public static void main(String[] args) {
