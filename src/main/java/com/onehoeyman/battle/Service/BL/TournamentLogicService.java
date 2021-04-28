@@ -68,7 +68,7 @@ public class TournamentLogicService {
         this.fightService = fightService;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 25000)
     public void startTournament() {
         List<Tournament> tournamentList = tournamentService.findAll();
         for (Tournament tournament :
@@ -81,7 +81,7 @@ public class TournamentLogicService {
         }
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 30000)
     public void canStartTournament() throws Exception {
         System.out.println("Beginning ");
         List<Tournament> tournamentList = tournamentService.findAll();

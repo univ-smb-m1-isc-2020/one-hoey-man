@@ -11,18 +11,19 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/users/")
 public class UserController {
-
     @Autowired
     IUserService userService;
+
 
     /**
      * Login with password and username
      * @param form {"username": , "password":}
      * @return User
      */
-    @GetMapping(path = "login")
+    @PostMapping(path = "login")
     @ResponseBody
     public Optional<User> login(@RequestBody LoginForm form){
         return userService.login(form.getUsername(), form.getPassword());

@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/characters")
 public class CharacterController {
 
     ICharacterService characterService;
     IUserService userService;
 
+    @Autowired
     public CharacterController(ICharacterService characterService, IUserService userService) {
         this.characterService = characterService;
         this.userService = userService;

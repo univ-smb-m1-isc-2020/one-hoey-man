@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 class BattleApplicationTests {
 
+    @Test
     void contextLoads() {
     }
 

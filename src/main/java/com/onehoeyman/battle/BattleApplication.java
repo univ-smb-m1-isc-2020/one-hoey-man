@@ -17,7 +17,6 @@ import java.util.Arrays;
 @EntityScan("com.onehoeyman.battle.Entity")
 @EnableJpaRepositories("com.onehoeyman.battle.Repository")
 @EnableScheduling
-@CrossOrigin(origins = "*")
 public class BattleApplication {
 
     public static void main(String[] args) {
