@@ -9,6 +9,7 @@ import com.onehoeyman.battle.Service.Impl.CharacterService;
 import com.onehoeyman.battle.Service.Impl.FightService;
 import com.onehoeyman.battle.Service.Impl.TournamentService;
 import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -278,8 +279,10 @@ public class TournamentLogicService {
 
 
         System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(combat));
+        String combatString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(combat);
+
         String filename = "resume_" + fight.getTournoi().getId() + "_" + fight.getId();
-        //Files.write(Paths.get("./log/" + filename), json.toString().getBytes());
+        Files.write(Paths.get("./log/" + filename), combatString.getBytes());
 
     }
 
