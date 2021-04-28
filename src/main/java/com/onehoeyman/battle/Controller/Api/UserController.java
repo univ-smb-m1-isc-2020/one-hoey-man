@@ -17,12 +17,25 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+    /**
+     * Login with password and username
+     * @param form {"username": , "password":}
+     * @return User
+     */
     @GetMapping(path = "login")
+    @ResponseBody
     public Optional<User> login(@RequestBody LoginForm form){
         return userService.login(form.getUsername(), form.getPassword());
     }
 
+    /**
+     * Register user
+     *
+     * @param {"username": , "password":, "email"}
+     * @return
+     */
     @PostMapping(path = "register", consumes = "application/json")
+    @ResponseBody
     public User register(@RequestBody User user){
         if(userService.existsUserByUsername(user.getUsername())){
             return null;

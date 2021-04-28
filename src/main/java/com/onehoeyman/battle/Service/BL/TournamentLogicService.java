@@ -129,6 +129,8 @@ public class TournamentLogicService {
                 tournament.getFights()) {
 
             if (fight.getNumber() >= borneInf && fight.getNumber() <= borneSup) {
+                fight.setFighter1(null);
+                fight.setFighter2(null);
                 if (fight.getNumber() % 2 == 0) {
                     int nextRoundNumber = fight.getNumber() / 2;
                     Fight nextFight = fightService.findByTournamentAndNumber(tournament, nextRoundNumber);

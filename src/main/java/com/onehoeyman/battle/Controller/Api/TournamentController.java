@@ -27,18 +27,21 @@ public class TournamentController {
      *
      * @return Tournament[]
      */
-    @GetMapping(path = "")
+    @GetMapping
+            (path = "")
+    @ResponseBody
     public List<Tournament> findTournaments() {
         return (List<Tournament>) tournamentService.findAll();
     }
 
     /**
      * Create a tournament
-     *
+     * Required name
      * @param tournament : Tournament
      * @return Tournament
      */
     @PostMapping(path = "create",consumes = "application/json", produces = "application/json")
+    @ResponseBody
     public Tournament create(@RequestBody Tournament tournament) {
         Tournament tournament_created = tournamentService.save(tournament);
         for (int i = 0; i < tournament_created.getMaxSize(); i++) {
@@ -57,6 +60,7 @@ public class TournamentController {
      * @return
      */
     @PostMapping(path = "{tournament_id}/register/{character_id}", produces = "application/json")
+    @ResponseBody
     public Tournament register(@PathVariable int tournament_id, @PathVariable int character_id) {
         Optional<Tournament> tournament = tournamentService.findById((long) tournament_id);
         Optional<Character> character = characterService.findById((long) character_id);
