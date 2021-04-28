@@ -115,6 +115,12 @@ public class TournamentLogicService {
                 tournamentList) {
             if (tournament.getStatus() == Status.Finished) {
                 tournamentService.delete(tournament);
+                for (Fight fight :
+                        tournament.getFights()) {
+                    fight.setFighter1(null);
+                    fight.setFighter2(null);
+                    fight.setWinner(null);
+                }
             }
         }
 

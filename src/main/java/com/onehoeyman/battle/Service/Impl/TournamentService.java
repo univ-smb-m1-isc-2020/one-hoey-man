@@ -39,6 +39,6 @@ public class TournamentService  implements ITournamentService {
              tournament.getParticipants()) {
             character.setTournament(null);
         }
-        //repository.delete(tournament);
+        repository.delete(tournament);
     }
 }

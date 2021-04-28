@@ -12,11 +12,14 @@ import java.util.List;
 @RestController
 @RequestMapping("api/characters")
 public class CharacterController {
-    @Autowired
 
     ICharacterService characterService;
-    @Autowired
     IUserService userService;
+
+    public CharacterController(ICharacterService characterService, IUserService userService) {
+        this.characterService = characterService;
+        this.userService = userService;
+    }
 
     /**
      * All characters
