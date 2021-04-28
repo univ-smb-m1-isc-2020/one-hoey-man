@@ -44,8 +44,10 @@ public class Character {
     @JsonIgnore
     private Tournament tournament;
     @OneToOne(mappedBy = "fighter1", optional = true)
+    @JsonIgnore
     private Fight fight1;
     @OneToOne(mappedBy = "fighter2", optional = true)
+    @JsonIgnore
     private Fight fight2;
     @Column(name = "number_victory")
     private int numberVictory = 0;

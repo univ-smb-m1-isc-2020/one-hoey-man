@@ -1,1 +1,22 @@
-{"winner":"{\"inventory\":[],\"id\":1,\"name\":\"Neptune\",\"hp\":30,\"strength\":30,\"intelligence\":30,\"agility\":30,\"numberVictory\":1,\"tournamentVictory\":0}","winner_name":"Neptune","messages":"[\"Neptune a l'avantage, à lui de commencer\",\"Neptune va attaquer !\",\"Neptune a infligé 2 !\",\"Test1 va attaquer !\",\"Test1 a infligé 2 !\",\"Oh no ! Neptune a manqué son coup !\",\"Oh no ! Test1 a manqué son coup !\",\"Neptune va attaquer !\",\"Neptune a infligé 2 !\",\"Test1 va attaquer !\",\"Test1 a infligé 4 !\",\"Oh no ! Neptune a manqué son coup !\",\"Oh no ! Test1 a manqué son coup !\",\"Neptune va attaquer !\",\"Neptune a infligé 3 !\",\"Oh no ! Test1 a manqué son coup !\",\"Neptune va attaquer !\",\"Ouch ! Critical hit\",\"Neptune a infligé 12 !\",\"Neptune a gagné contre Test1\"]"}
+{
+  "winner" : {
+    "id" : 1,
+    "inventory" : [ ],
+    "name" : "Test1",
+    "hp" : 30,
+    "strength" : 30,
+    "intelligence" : 30,
+    "agility" : 30,
+    "numberVictory" : 1,
+    "tournamentVictory" : 4,
+    "head" : null,
+    "chest" : null,
+    "leg" : null,
+    "hand" : null,
+    "totalAgility" : 30,
+    "totalHp" : 30,
+    "totalIntelligence" : 30,
+    "totalStrength" : 30
+  },
+  "messages" : [ "Test1 a l'avantage, à lui de commencer", "Test1 va attaquer !", "Ouch ! Critical hit", "Test1 a infligé 24 !", "Test1 a gagné contre Test2" ]
+}
