@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/users/")
 public class UserController {
     @Autowired
@@ -24,6 +25,7 @@ public class UserController {
      */
     @PostMapping(path = "login")
     @ResponseBody
+    @CrossOrigin
     public Optional<User> login(@RequestBody LoginForm form){
         return userService.login(form.getUsername(), form.getPassword());
     }
@@ -38,6 +40,7 @@ public class UserController {
      */
     @PostMapping(path = "register", consumes = "application/json")
     @ResponseBody
+    @CrossOrigin
     public User register(@RequestBody User user){
         if(userService.existsUserByUsername(user.getUsername())){
             return null;

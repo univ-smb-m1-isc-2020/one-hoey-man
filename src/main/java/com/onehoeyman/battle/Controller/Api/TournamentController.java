@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/tournaments/")
 public class TournamentController {
     @Autowired
@@ -27,9 +28,9 @@ public class TournamentController {
      *
      * @return Tournament[]
      */
-    @GetMapping
-            (path = "")
+    @GetMapping(path = "")
     @ResponseBody
+    @CrossOrigin
     public List<Tournament> findTournaments() {
         return (List<Tournament>) tournamentService.findAll();
     }
@@ -42,6 +43,7 @@ public class TournamentController {
      */
     @PostMapping(path = "create",consumes = "application/json", produces = "application/json")
     @ResponseBody
+    @CrossOrigin
     public Tournament create(@RequestBody Tournament tournament) {
         Tournament tournament_created = tournamentService.save(tournament);
         for (int i = 0; i < tournament_created.getMaxSize(); i++) {
@@ -61,6 +63,7 @@ public class TournamentController {
      */
     @PostMapping(path = "{tournament_id}/register/{character_id}", produces = "application/json")
     @ResponseBody
+    @CrossOrigin
     public Tournament register(@PathVariable int tournament_id, @PathVariable int character_id) {
         Optional<Tournament> tournament = tournamentService.findById((long) tournament_id);
         Optional<Character> character = characterService.findById((long) character_id);

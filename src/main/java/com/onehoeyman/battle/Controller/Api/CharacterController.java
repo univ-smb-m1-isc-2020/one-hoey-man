@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/characters")
 public class CharacterController {
 
@@ -47,6 +48,7 @@ public class CharacterController {
      */
     @GetMapping(path = "")
     @ResponseBody
+    @CrossOrigin(origins = "*", methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS, RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT, RequestMethod.TRACE}, allowedHeaders = "X-Requested-With,Content-Type,Accept,Origin")
     public List<Character> findCharacters() {
         List<Character> characters = (List<Character>) characterService.findAll();
         return characters;
@@ -59,6 +61,7 @@ public class CharacterController {
      */
     @GetMapping(path = "creator/{creator_id}")
     @ResponseBody
+    @CrossOrigin
     public List<Character> findCharactersByCreatorId(@PathVariable int creator_id) {
         List<Character> characters = (List<Character>) characterService.findByCreatorId(creator_id);
         return characters;
@@ -72,6 +75,7 @@ public class CharacterController {
      */
     @PostMapping(path = "create", produces = "application/json")
     @ResponseBody
+    @CrossOrigin
     public Character create(@RequestBody @Validated Character character, @RequestParam("creator_id") int creator_id) {
         character.setCreator(userService.findById(creator_id));
         return characterService.save(character);
